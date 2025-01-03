@@ -14,9 +14,9 @@ steps:
   inputs:
     version: '$(dotnetSdkVersion)'
 
-- task: NuGetToolInstaller@0
+- task: NuGetToolInstaller@1
   inputs:
-    versionSpec: '5.9.1'
+    versionSpec: '6.x'
 
 - task: Npm@1
   displayName: 'Run npm install'
@@ -32,6 +32,9 @@ steps:
 - script: 'echo "$(Build.DefinitionName), $(Build.BuildId), $(Build.BuildNumber)" > buildinfo.txt'
   displayName: 'Write build info'
   workingDirectory: $(wwwrootDir)
+
+- script: dotnet clean
+  displayName: 'Clean the workspace'
 
 - task: NuGetCommand@2
   displayName: 'Restore project dependencies'
